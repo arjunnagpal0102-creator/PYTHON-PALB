@@ -1,0 +1,22 @@
+class Solution:
+    def checkPermutation(self, txt, pat):
+        from collections import Counter
+        
+        n = len(pat)
+        pat_count = Counter(pat)
+        window_count = Counter()
+        
+        for i in range(len(txt)):
+            window_count[txt[i]] += 1
+            
+            if i >= n:
+                left_char = txt[i-n]
+                if window_count[left_char] == 1:
+                    del window_count[left_char]
+                else:
+                    window_count[left_char] -= 1
+            
+            if window_count == pat_count:
+                return True
+        
+        return False
